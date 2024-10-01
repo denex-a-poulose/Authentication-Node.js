@@ -91,7 +91,7 @@ const signUpHandler = (req, res) => {
   });
 
   res.json({
-    message: "You're signed in!",
+    message: "You're signed up!",
   });
 
   console.log(users);
