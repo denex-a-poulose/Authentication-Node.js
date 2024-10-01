@@ -112,7 +112,7 @@ const signInHandler = (req, res) => {
     let token = generateToken();
     user.token = token;
     res.json({
-      message: token,
+      token: token,
     });
   } else {
     res.status(403).send({
@@ -125,5 +125,26 @@ const signInHandler = (req, res) => {
 
 app.post("/signup", signUpHandler);
 app.post("/signin", signInHandler);
+app.get("/me", (req, res) => {
+  const token = req.headers.token;
 
+  let foundUser = null;
+
+  for (let i = 0; i < users.length; i++) {
+    if (users[i].token == token) {
+      foundUser = users[i];
+    }
+  }
+
+  if (foundUser) {
+    res.json({
+      username: foundUser.username,
+      password: foundUser.password,
+    });
+  } else {
+    res.json({
+      message: "invalid token",
+    });
+  }
+});
 app.listen(3000, () => console.log("Listening on Port 3000"));
