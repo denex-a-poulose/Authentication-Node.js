@@ -13,6 +13,10 @@ const logger = (req, res, next) => {
   next();
 };
 
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/public/index.html");
+});
+
 const signUpHandler = (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
@@ -82,9 +86,7 @@ const auth = (req, res, next) => {
 
 app.get("/me", logger, auth, (req, res) => {
   const currentUser = req.username;
-  //   const token = req.headers.token;
-  //   const decodedData = jwt.verify(token, JWT_SECRET);
-  //   const currentUser = decodedData.username;
+
   for (let i = 0; i < users.length; i++) {
     if (users[i].username == currentUser) {
       foundUser = users[i];
